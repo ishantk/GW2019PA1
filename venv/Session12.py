@@ -37,6 +37,15 @@
 
     5. Create a DBHelper which will be accessing database
 
+    6. Update Data in Table
+    update Customer set name = 'John Watson', email = 'john.w@example.com', phone = '+91 99999 88888' where cid = 1
+
+    7. Delete Data in Table
+    delete from Customer where cid = 1
+
+    8. fetch all rows from Table in Database
+    select * from Customer
+
 """
 
 import mysql.connector
@@ -60,6 +69,72 @@ class DBHelper:
 
         print(customer.name," Saved !!")
 
+    def updateCustomerInDB(self, customer):
+
+        # 1. Create SQL Statement
+        sql = "update Customer set name = '{}', email = '{}', phone = '{}' where cid = {}".format(customer.name, customer.email, customer.phone, customer.cid)
+        # 2. Create Connection with Database
+        con = mysql.connector.connect(user="root", password="",host="127.0.0.1", database="auridb")
+
+        # 3. Obtain Cursor ro execute SQL Statements
+        cursor = con.cursor()
+        cursor.execute(sql)
+        con.commit()
+
+        print(customer.name," Updated !!")
+
+    def deleteCustomerInDB(self, cid):
+        # 1. Create SQL Statement
+        sql = "delete from Customer where cid = {}".format(cid)
+        # 2. Create Connection with Database
+        con = mysql.connector.connect(user="root", password="", host="127.0.0.1", database="auridb")
+
+        # 3. Obtain Cursor ro execute SQL Statements
+        cursor = con.cursor()
+        cursor.execute(sql)
+        con.commit()
+
+        print(cid, " Deleted !!")
+
+    def fetchAllCustomers(self):
+        # 1. Create SQL Statement
+        # sql = "select * from Customer"
+        # sql = "select * from Customer order by name asc"
+        sql = "select * from Customer order by name desc"
+
+        # 2. Create Connection with Database
+        con = mysql.connector.connect(user="root", password="", host="127.0.0.1", database="auridb")
+
+        # 3. Obtain Cursor ro execute SQL Statements
+        cursor = con.cursor()
+        cursor.execute(sql)
+
+        # row = cursor.fetchone()
+        # print(row)
+        #
+        # row = cursor.fetchone()
+        # print(row)
+
+        rows = cursor.fetchall()
+        # print(rows)  # rows is a List of Tuples. 1 Tuple Represents 1 Row
+
+        for row in rows:
+            print(row)
+
+    def fetchCustomer(self, cid):
+        # 1. Create SQL Statement
+        sql = "select * from Customer where cid = {}".format(cid)
+
+        # 2. Create Connection with Database
+        con = mysql.connector.connect(user="root", password="", host="127.0.0.1", database="auridb")
+
+        # 3. Obtain Cursor ro execute SQL Statements
+        cursor = con.cursor()
+        cursor.execute(sql)
+
+        row = cursor.fetchone()
+        print(row)
+
 # Model
 class Customer:
 
@@ -73,6 +148,9 @@ class Customer:
 
 print("Options:")
 print("1. Create New Customer")
+print("2. Update Customer")
+print("3. Delete Customer")
+print("4. View All Customers")
 
 choice = int(input("Enter Choice: "))
 
@@ -89,5 +167,35 @@ if choice == 1:
         db = DBHelper()
         db.saveCustomerInDB(cRef)
 
+elif choice == 2:
+
+    db = DBHelper()
+
+    cRef = Customer(None, None, None)
+    cRef.cid = int(input("Enter Customer ID:")) # we need to know which id has to be updated !!
+
+    db.fetchCustomer(cRef.cid)
 
 
+    cRef.name = input("Enter Customer Name:")
+    cRef.phone = input("Enter Customer Phone:")
+    cRef.email = input("Enter Customer Email:")
+
+    cRef.showCustomerDetails()
+
+    update = input("Would you like to Update Customer(yes/no)")
+    if update == "yes":
+        db.updateCustomerInDB(cRef)
+
+elif choice == 3:
+
+    cid = int(input("Enter Customer ID:"))
+
+    delete = input("Would you like to Delete Customer(yes/no)")
+    if delete == "yes":
+        db = DBHelper()
+        db.deleteCustomerInDB(cid)
+
+elif choice == 4:
+    db = DBHelper()
+    db.fetchAllCustomers()

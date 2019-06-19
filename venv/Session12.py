@@ -146,6 +146,10 @@ class Customer:
     def showCustomerDetails(self):
         print(">> Name: {} Phone: {} Email:{}".format(self.name, self.phone, self.email))
 
+
+
+"""
+
 print("Options:")
 print("1. Create New Customer")
 print("2. Update Customer")
@@ -199,3 +203,4 @@ elif choice == 3:
 elif choice == 4:
     db = DBHelper()
     db.fetchAllCustomers()
+"""

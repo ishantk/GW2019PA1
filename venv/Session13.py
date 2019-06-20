@@ -7,21 +7,39 @@ from tkinter import *
 
 from Session12 import *
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
+cred = credentials.Certificate("serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+
 # cRef = Session12.Customer("John", "+91 99999 88888", "john@example.com")
 # cRef.showCustomerDetails()
 
-
-
 def onClick():
+
     print("Button Clicked")
+
     cRef = Customer(None, None, None)
+
     cRef.name = entryName.get()
     cRef.phone = entryPhone.get()
     cRef.email = entryEmail.get()
+
     cRef.showCustomerDetails()
 
-    db = DBHelper()
-    db.saveCustomerInDB(cRef)
+    # db = DBHelper()
+    # db.saveCustomerInDB(cRef)
+
+    data = cRef.__dict__
+
+    db.collection("Customer").document().set(data)
+
+    print(">> ", cRef.name, "Saved in Firebase")
 
 
 window = Tk()
@@ -54,7 +72,7 @@ window.mainloop() # Keep on running the program/process
 
 """
     Phase-I
-    CRUD Operations with GUI
+    CRUD Operations with GUI + Firebase :)
     
     Phase-II
     Loyalty Points : 100 -> 1Point 1Re

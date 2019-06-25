@@ -23,9 +23,9 @@ class BankAccount:
         if self.attempts == 3:
             # iRef = IndexError("Illegal Attempts")
             # raise iRef
-            bRef = BankingError("Illegal Attempts")
-            raise bRef
-
+            # bRef = BankingError("Illegal Attempts")
+            # raise bRef
+            raise BankingError("Illegal Attempts")
 print(">> Welcome")
 print(">> Banking Started")
 

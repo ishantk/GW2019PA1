@@ -11,7 +11,12 @@ print(numbers)
 print(array)
 
 # Pandas Series
-series = pd.Series([11, 13, 15, 17, 19])
+series = pd.Series(numbers)
+print(series)
+
+print("------")
+
+series = pd.Series(array)
 print(series)
 
 

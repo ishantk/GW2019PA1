@@ -69,5 +69,9 @@ print(">> Predicted Class is:",predictedClass)
 # Assignment:
 # https://gogul09.github.io/software/image-classification-python
 
+# Reference Blogs for ML Maths
+# https://www.svm-tutorial.com/2014/11/svm-understanding-math-part-2/#hyperplane-equation
+# http://cs229.stanford.edu/notes/cs229-notes3.pdf
+
 
 

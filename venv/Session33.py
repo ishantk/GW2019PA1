@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 
 print(">> TensorFlow Version is:",tf.__version__)
 
+# https://www.tensorflow.org/tutorials
+
 fashion_mnist = keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
